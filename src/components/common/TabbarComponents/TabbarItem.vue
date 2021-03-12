@@ -1,5 +1,5 @@
-
 <template>
+    <!-- 选项栏元素  -->
     <div id="tabbar-item" class="tabbar-item" @click="itemClick()">
         <!-- 添加div包裹 属性写在div中避免替换时出错 -->
        <div v-if="!isActive"><slot name="item-icon"></slot></div> 

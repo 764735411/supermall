@@ -1,4 +1,5 @@
 <template>
+    <!-- 选项栏主体 -->
     <div id="tabbar" class="tabbar">
         <slot></slot>
     </div>

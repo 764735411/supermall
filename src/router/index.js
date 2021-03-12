@@ -10,24 +10,24 @@ const Profile = () => import('../views/profile/Profile.vue')
 
 const routes = [
   {
-    path:'/',
-    redirect:'/home'
+    path: '/',
+    redirect: '/home'
   },
   {
-    path:'/home',
-    component:Home
+    path: '/home',
+    component: Home
   },
   {
-    path:'/profile',
-    component:Profile
+    path: '/profile',
+    component: Profile
   },
   {
-    path:'/classify',
-    component:Classify
+    path: '/classify',
+    component: Classify
   },
   {
-    path:'/cat',
-    component:Cat
+    path: '/cat',
+    component: Cat
   },
 ]
 

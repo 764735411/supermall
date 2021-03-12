@@ -14,3 +14,8 @@ export default {
   }
 }
 </script>
+
+<style lang="less">
+  //导入全局css
+  @import './assets/css/base.css';
+</style>
