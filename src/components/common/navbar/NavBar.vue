@@ -1,5 +1,5 @@
-<template>
 <!-- 导航栏 -->
+<template>
   <div class="nav-bar">
     <div class="left"><slot name="left"></slot></div>
     <div class="center"><slot name="center"></slot></div>

@@ -1,3 +1,4 @@
+<!-- 轮播图 -->
 <template>
   <div id="hy-swiper">
     <div
@@ -47,7 +48,10 @@ export default {
   data() {
     return {
       slideCount: 0, //元素个数
-      totalWidth: 0, //swiper的宽度
+      /**
+       * wiper的宽度
+       */
+      totalWidth: 0,
       swiperStyle: {}, //swiper的样式
       currentIndex: 1, //轮播图当前的index
       scrolling: false, //是否正在滚动
@@ -67,12 +71,13 @@ export default {
     /**
      * 显示样式
      */
-    // indexStyle(index){
-    //   return index === this.currentIndex - 1;
-    // },
     indexStyle(index) {
       return index === this.iconIndex;
     },
+    // indexStyle(index){
+    //   return index === this.currentIndex - 1;
+    // },
+    
     /**
      * 定时器操作
      */
@@ -193,7 +198,7 @@ export default {
       let moveDistance = this.distance + currentPosition;
       // 2.设置当前的位置
       this.setTransform(moveDistance);
-      Systom
+      Systom;
     },
 
     /**
