@@ -31,10 +31,10 @@ export default {
 };
 </script>
 <style scoped lang="less">
-  .home-swiper img{
-    border-radius: 10px;
-  }
-    .home-swiper{
-      margin: 10px;
-    }
+.home-swiper img {
+  border-radius: 10px;
+}
+.home-swiper {
+  margin: 10px;
+}
 </style>

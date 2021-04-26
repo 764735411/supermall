@@ -71,13 +71,14 @@ export default {
     /**
      * 显示样式
      */
+    /* 移动时红点不会改变 */
     indexStyle(index) {
       return index === this.iconIndex;
     },
-    // indexStyle(index){
+    // indexStyle(index) {
     //   return index === this.currentIndex - 1;
     // },
-    
+
     /**
      * 定时器操作
      */
@@ -173,7 +174,7 @@ export default {
      * 拖动事件处理
      */
     touchStart(e) {
-      console.log("touchStart");
+      // console.log("touchStart");
       //1.如果正在滚动不可以拖动
       if (this.scrolling) return;
       //2.停止计时器
@@ -198,14 +199,13 @@ export default {
       let moveDistance = this.distance + currentPosition;
       // 2.设置当前的位置
       this.setTransform(moveDistance);
-      Systom;
     },
 
     /**
      *
      */
     touchEnd(e) {
-      console.log("touchEnd");
+      // console.log("touchEnd");
       // 1.获取移动的距离
       let currentMove = Math.abs(this.distance);
       //console.log(this.distance);
@@ -217,11 +217,26 @@ export default {
         currentMove > this.totalWidth * this.moveRatio
       ) {
         this.currentIndex--;
+        console.log("currentIndex--", this.currentIndex);
+        if (this.currentIndex >= 1 && this.currentIndex <= 4) {
+          this.iconIndex = this.currentIndex - 1;
+        } else if (this.currentIndex == 0) {
+          this.iconIndex = 3;
+        }
+        console.log("iconIndex--", this.iconIndex);
       } else if (
         this.distance < 0 &&
         currentMove > this.totalWidth * this.moveRatio
       ) {
         this.currentIndex++;
+        if (this.currentIndex >= 2 && this.currentIndex <= 4) {
+          this.iconIndex = this.currentIndex - 1;
+        } else {
+          this.iconIndex = 0;
+        }
+
+        console.log("currentIndex++", this.currentIndex);
+        console.log("iconIndex++", this.iconIndex);
       }
 
       // 3.移动到正确的位置
