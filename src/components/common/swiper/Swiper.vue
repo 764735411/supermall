@@ -65,7 +65,7 @@ export default {
       this.handleDom();
       // 2.开启定时器
       this.startTimer();
-    }, 300);
+    }, 1000);
   },
   methods: {
     /**
@@ -217,13 +217,13 @@ export default {
         currentMove > this.totalWidth * this.moveRatio
       ) {
         this.currentIndex--;
-        console.log("currentIndex--", this.currentIndex);
+        // console.log("currentIndex--", this.currentIndex);
         if (this.currentIndex >= 1 && this.currentIndex <= 4) {
           this.iconIndex = this.currentIndex - 1;
         } else if (this.currentIndex == 0) {
           this.iconIndex = 3;
         }
-        console.log("iconIndex--", this.iconIndex);
+        // console.log("iconIndex--", this.iconIndex);
       } else if (
         this.distance < 0 &&
         currentMove > this.totalWidth * this.moveRatio
@@ -235,8 +235,8 @@ export default {
           this.iconIndex = 0;
         }
 
-        console.log("currentIndex++", this.currentIndex);
-        console.log("iconIndex++", this.iconIndex);
+        // console.log("currentIndex++", this.currentIndex);
+        // console.log("iconIndex++", this.iconIndex);
       }
 
       // 3.移动到正确的位置

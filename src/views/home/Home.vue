@@ -4,56 +4,8 @@
     <home-swiper :cbanners="banners"></home-swiper>
     <recommend-view :recommend="recommends" />
     <future-view></future-view>
-    <tabs :titles="tabsTitles"></tabs>
-
-    <ul>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-      <li></li>
-    </ul>
+    <tabs :titles="tabsTitles" @tabClick="tabClick"></tabs>
+    <goods-list :goodsList="goods[goodsType].list"></goods-list>
   </div>
 </template>
 
@@ -64,6 +16,7 @@ import FutureView from "./homechildren/FutureView";
 
 import NavBar from "components/common/navbar/NavBar";
 import Tabs from "components/common/tabs/Tabs";
+import GoodsList from "components/content/goods/GoodsList";
 
 import { getHomeMultidata, getGoodsList } from "network/home.js";
 
@@ -75,6 +28,7 @@ export default {
     RecommendView,
     FutureView,
     Tabs,
+    GoodsList,
   },
   data() {
     return {
@@ -86,29 +40,49 @@ export default {
         new: { page: 0, list: [] },
         sell: { page: 0, list: [] },
       },
+      goodsType:'pop',
     };
   },
   created() {
     //获取展示数据
     this.homeGetMultidata();
     //获取goods数据
-    this.homeGetGoodsList('pop');
-    this.homeGetGoodsList('new');
-    this.homeGetGoodsList('sell');
+    this.homeGetGoodsList("pop");
+    this.homeGetGoodsList("new");
+    this.homeGetGoodsList("sell");
   },
   methods: {
+    /* 事件 */
+    tabClick(index) {
+      // console.log(index);
+      switch (index) {
+        case 0:
+          this.goodsType = 'pop';
+          break;
+        case 1:
+          this.goodsType = 'new';
+          break;
+        case 2:
+          this.goodsType = 'sell';
+          break;
+        default:
+          break;
+      }
+      console.log(this.goodsType);
+    },
+    /* 网络 */
     homeGetGoodsList(type) {
-      let page = this.goods[type].page+1;
+      let page = this.goods[type].page + 1;
       getGoodsList(type, page)
-      .then((res) => {
-        let goodsData = res.data.list;
-        console.log(res.data);
-        this.goods[type].list.push(...goodsData);
-        this.goods[type].page = res.data.page;
-      })
-      .catch(res=>{
-        console.log(res);
-      });
+        .then((res) => {
+          let goodsData = res.data.list;
+          // console.log(res.data);
+          this.goods[type].list.push(...goodsData);
+          this.goods[type].page = res.data.page;
+        })
+        .catch((res) => {
+          console.log(res);
+        });
     },
     homeGetMultidata() {
       getHomeMultidata()
