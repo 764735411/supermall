@@ -34,7 +34,7 @@ export default {
 .home-swiper img {
   border-radius: 10px;
 }
-.home-swiper {
+.home-swiper{
   margin: 10px;
 }
 </style>

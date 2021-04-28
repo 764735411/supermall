@@ -1,6 +1,6 @@
 <template>
   <div class="goods-list-item">
-    <img :src="goodsItem.show.img" alt="" />
+    <img :src="goodsItem.show.img" alt=""  @load="imgLoad"/>
     <div class="item-info">
       <p>{{ goodsItem.title }}</p>
       <span class="price">单价:{{ goodsItem.price }}</span>
@@ -19,6 +19,12 @@ export default {
         return {};
       },
     },
+  },
+  methods: {
+    imgLoad(){
+      // console.log('imgLoad');
+      this.$bus.$emit('imgLoad');
+    }
   },
 };
 </script>
