@@ -56,6 +56,7 @@ export default {
       },
       goodsType: "pop",
       isShowBackTop: false,
+      topsOffset:0,
     };
   },
   created() {
@@ -73,8 +74,7 @@ export default {
       debounce(() => {
         console.log("-----");
         this.$refs.scroll.refresh();
-      }),
-      200
+      }),200
     );
   },
   methods: {

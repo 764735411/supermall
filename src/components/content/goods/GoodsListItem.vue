@@ -32,7 +32,6 @@ export default {
 <style scoped lang="less">
 .goods-list-item {
   width: 46%;
-
   position: relative;
 }
 .goods-list-item img {

@@ -44,7 +44,7 @@ export default {
 
 <style scoped lang="less"> 
     .tabbar-item {
-        flex: 1px;
+        flex: 1;
         text-align: center;
         height: 49px; 
         font-size: 14px;
