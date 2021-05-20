@@ -122,7 +122,6 @@ export default {
     },
     //显示返回顶部按钮
     contentScroll(position) {
-      // console.log(-position.y);
       this.isShowBackTop = (-position.y) > 1000;
       this.tobsHideIsShow = (-position.y) > this.topsOffsetTop;
     },
@@ -136,7 +135,6 @@ export default {
     swiperImageLoad() {
       // 组件中的$el属性可以获取组件中的元素
       this.topsOffsetTop = this.$refs.topsControl.$el.offsetTop;
-      // console.dir(this.topsOffsetTop);
     },
     /* 网络请求方法 */
     homeGetGoodsList(type) {
@@ -170,7 +168,6 @@ export default {
   position: relative;
   height: 100vh;
 }
-
 .home-nav-bar {
   background-color: rgb(45, 230, 230);
   color: #fff;
@@ -183,7 +180,6 @@ export default {
 }
 /* better-scroll 设置高度 */
 .content {
-  // height: 500px;
   position: absolute;
   overflow: hidden;
   top: 44px;

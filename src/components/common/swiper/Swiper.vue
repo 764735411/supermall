@@ -1,6 +1,6 @@
 <!-- 轮播图 -->
 <template>
-  <div id="hy-swiper">
+  <div id="swiper-container">
     <div
       class="swiper"
       @touchstart="touchStart"
@@ -10,6 +10,7 @@
       <!-- 插入slide -->
       <slot></slot>
     </div>
+    <!-- 分页器 -->
     <slot name="indicator"></slot>
     <div class="indicator">
       <slot name="indicator" v-if="showIndicator && slideCount > 1">
@@ -30,28 +31,25 @@ export default {
   props: {
     interval: {
       type: Number,
-      default: 3000,
+      default: 3000
     },
     animDuration: {
       type: Number,
-      default: 300,
+      default: 300
     },
     moveRatio: {
       type: Number,
-      default: 0.25,
+      default: 0.25
     },
     showIndicator: {
       type: Boolean,
-      default: true,
+      default: true
     },
   },
   data() {
     return {
       slideCount: 0, //元素个数
-      /**
-       * wiper的宽度
-       */
-      totalWidth: 0,
+      totalWidth: 0,//wiper的宽度
       swiperStyle: {}, //swiper的样式
       currentIndex: 1, //轮播图当前的index
       scrolling: false, //是否正在滚动
@@ -59,8 +57,10 @@ export default {
     };
   },
   mounted() {
+    // todo 加载完成初始化
+
+    // setTimeout初始化
     setTimeout(() => {
-      //console.log("Swiper mounted");
       // 1.操作DOM, 在前后添加Slide
       this.handleDom();
       // 2.开启定时器
@@ -71,10 +71,10 @@ export default {
     /**
      * 显示样式
      */
-    /* 移动时红点不会改变 */
     indexStyle(index) {
       return index === this.iconIndex;
     },
+     /* 移动时红点不会改变 */
     // indexStyle(index) {
     //   return index === this.currentIndex - 1;
     // },
@@ -82,6 +82,7 @@ export default {
     /**
      * 定时器操作
      */
+    //开始计时器
     startTimer() {
       this.playTimer = window.setInterval(() => {
         this.currentIndex++;
@@ -89,8 +90,8 @@ export default {
         this.iconIndex = this.iconIndex % this.slideCount;
         this.scrollContent(-this.currentIndex * this.totalWidth);
       }, this.interval);
-      //console.log(this.playTimer);
     },
+    //停止计时器
     stopTimer() {
       window.clearInterval(this.playTimer);
     },
@@ -99,13 +100,13 @@ export default {
      * 初始化 操作Dom,在Dom后添加slide
      */
     handleDom() {
-      //console.log("swiper handleDom");
       //1.获取操作对象
       let swiperEl = document.querySelector(".swiper");
       let slideEls = swiperEl.getElementsByClassName("slide");
 
       //2.保存个数
       this.slideCount = slideEls.length;
+      console.log("length",slideEls.length);
 
       //3.如果大于1个，那么在前后分别添加一个slide
       if (this.slideCount > 1) {
@@ -115,7 +116,6 @@ export default {
         swiperEl.appendChild(cloneFrist);
         this.totalWidth = swiperEl.offsetWidth;
         this.swiperStyle = swiperEl.style;
-        //console.log(swiperEl);
       }
 
       //4.让swiper元素，显示第一个（目前是显示前面添加的最后一个元素）
@@ -131,11 +131,11 @@ export default {
 
       //1.开始滚动动画
       this.swiperStyle.transition = "transform " + this.animDuration + "ms";
-      //console.log(this.swiperStyle.transition);
       this.setTransform(currentPosition);
 
       //2.判断滚动到的位置
       this.checkPosition();
+
       //3.滚动完成
       this.scrolling = false;
     },
@@ -163,9 +163,7 @@ export default {
      * 设置滚动的位置
      */
     setTransform(position) {
-      //console.log('setTransform');
       this.swiperStyle.transform = `translate3d(${position}px,0,0)`;
-      //console.log(this.swiperStyle);
       this.swiperStyle["-webkit-transform"] = `translate3d(${position}px),0,0`;
       this.swiperStyle["-ms-transform"] = `translate3d(${position}px),0,0`;
     },
@@ -174,21 +172,18 @@ export default {
      * 拖动事件处理
      */
     touchStart(e) {
-      // console.log("touchStart");
       //1.如果正在滚动不可以拖动
       if (this.scrolling) return;
       //2.停止计时器
       this.stopTimer();
       //3.保存开始滚动的位置
       this.startX = e.touches[0].pageX;
-      // console.log(this.startX, "touchStart");
     },
 
     /**
      *
      */
     touchMove(e) {
-      // console.log("touchMove");
       //1.计算出用户拖动的距离
       this.currentX = e.touches[0].pageX;
       // console.log(this.currentX, "currentX");
@@ -269,7 +264,7 @@ export default {
 
 
 <style scoped lang="less">
-#hy-swiper {
+#swiper-container {
   overflow: hidden;
   position: relative;
 }
@@ -277,22 +272,22 @@ export default {
   display: flex;
 }
 .indicator {
+  position: absolute;
   display: flex;
   justify-content: center;
-  position: absolute;
   width: 100%;
   bottom: 8px;
 }
 .indi-item {
   box-sizing: border-box;
+  margin: 0 5px;
   width: 8px;
   height: 8px;
-  border-radius: 4px;
   background-color: #fff;
   line-height: 8px;
   text-align: center;
   font-size: 12px;
-  margin: 0 5px;
+  border-radius: 4px;
 }
 .indi-item.active {
   background-color: rgba(212, 62, 46, 1);

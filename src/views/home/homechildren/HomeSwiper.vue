@@ -1,9 +1,10 @@
+<!--轮播图-->
 <template>
   <div class="home-swiper">
     <swiper>
       <swiper-item v-for="item in cbanners" :key="item.background">
         <a :href="item.link">
-          <img :src="item.image" alt=""  @load="imageLoad" />
+          <img :src="item.image"  @load="imageLoad" />
         </a>
       </swiper-item>
     </swiper>
@@ -48,6 +49,6 @@ export default {
   border-radius: 10px;
 }
 .home-swiper{
-  margin: 10px;
+  padding: 10px;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="goods-list-item">
-    <img :src="goodsItem.show.img" alt=""  @load="imgLoad"/>
+    <img :src="goodsItem.show.img"  @load="imgLoad"/>
     <div class="item-info">
       <p>{{ goodsItem.title }}</p>
       <span class="price">单价:{{ goodsItem.price }}</span>
@@ -31,19 +31,21 @@ export default {
 
 <style scoped lang="less">
 .goods-list-item {
-  width: 46%;
   position: relative;
+  width: 46%;
+  height: 320px;
+  margin-top: 10px;
 }
 .goods-list-item img {
-  padding-bottom: 40px;
-  height: 100%;
+  // padding-bottom: 40px;
+  height: 280px;
   width: 100%;
   border-radius: 5px;
 }
 .item-info {
-  position: absolute;
-  left: 0;
-  bottom: 0;
+  // position: absolute;
+  // left: 0;
+  // bottom: 0;
   height: 40px;
   width: 100%;
   text-align: center;
