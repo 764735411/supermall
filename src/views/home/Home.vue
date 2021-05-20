@@ -1,16 +1,32 @@
 <template>
   <div id="home">
     <nav-bar class="home-nav-bar"><div slot="center">购物街</div></nav-bar>
+     <tabs
+        class="tab-item tabs-hide"
+        :titles="tabsTitles"
+        @tabClick="tabClick"
+        ref="topsControlHide"
+        v-show="tobsHideIsShow"
+      ></tabs>
     <scroll-component
       class="content"
       ref="scroll"
       @backTopScroll="contentScroll"
       @scrollPullingUp="scrollPullingUp"
     >
-      <home-swiper :cbanners="banners" class="home-swiper"></home-swiper>
+      <home-swiper
+        :cbanners="banners"
+        class="home-swiper"
+        @swiperImageLoad="swiperImageLoad"
+      ></home-swiper>
       <recommend-view :recommend="recommends"></recommend-view>
       <future-view></future-view>
-      <tabs class="tab-item" :titles="tabsTitles" @tabClick="tabClick"></tabs>
+      <tabs
+        class="tab-item"
+        :titles="tabsTitles"
+        @tabClick="tabClick"
+        ref="topsControl"
+      ></tabs>
       <goods-list :goodsList="goods[goodsType].list"></goods-list>
     </scroll-component>
     <!-- vue2.x组件要监听事件需要加上.native vue3.x移除.native -->
@@ -56,7 +72,8 @@ export default {
       },
       goodsType: "pop",
       isShowBackTop: false,
-      topsOffset:0,
+      topsOffsetTop: 300,
+      tobsHideIsShow:false,
     };
   },
   created() {
@@ -74,7 +91,8 @@ export default {
       debounce(() => {
         console.log("-----");
         this.$refs.scroll.refresh();
-      }),200
+      }),
+      200
     );
   },
   methods: {
@@ -94,6 +112,9 @@ export default {
         default:
           break;
       }
+      //使用子组件的属性
+      this.$refs.topsControlHide.currentIndex = index;
+      this.$refs.topsControl.currentIndex = index;
     },
     //backTop点击事件
     backTopClick() {
@@ -101,11 +122,9 @@ export default {
     },
     //显示返回顶部按钮
     contentScroll(position) {
-      if (-position.y > 1000) {
-        this.isShowBackTop = true;
-      } else {
-        this.isShowBackTop = false;
-      }
+      // console.log(-position.y);
+      this.isShowBackTop = (-position.y) > 1000;
+      this.tobsHideIsShow = (-position.y) > this.topsOffsetTop;
     },
     //上拉事件
     scrollPullingUp() {
@@ -113,7 +132,12 @@ export default {
       this.homeGetGoodsList(this.goodsType);
       this.$refs.scroll.finishPullUp();
     },
-
+    //轮播图图片加载
+    swiperImageLoad() {
+      // 组件中的$el属性可以获取组件中的元素
+      this.topsOffsetTop = this.$refs.topsControl.$el.offsetTop;
+      // console.dir(this.topsOffsetTop);
+    },
     /* 网络请求方法 */
     homeGetGoodsList(type) {
       let page = this.goods[type].page + 1;
@@ -150,12 +174,12 @@ export default {
 .home-nav-bar {
   background-color: rgb(45, 230, 230);
   color: #fff;
-  //固定定位
-  position: fixed;
-  left: 0;
-  top: 0;
-  right: 0;
-  z-index: 9;
+  //固定定位 在原生滚动中有用
+  // position: fixed;
+  // left: 0;
+  // top: 0;
+  // right: 0;
+  // z-index: 9;
 }
 /* better-scroll 设置高度 */
 .content {
@@ -168,5 +192,10 @@ export default {
 }
 .tab-item {
   margin-bottom: 10px;
+}
+.tabs-hide{
+  position: relative;
+  z-index: 9;
+  background-color: #fff;
 }
 </style>
