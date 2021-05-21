@@ -1,13 +1,13 @@
 <template>
   <div id="home">
     <nav-bar class="home-nav-bar"><div slot="center">购物街</div></nav-bar>
-     <tabs
-        class="tab-item tabs-hide"
-        :titles="tabsTitles"
-        @tabClick="tabClick"
-        ref="topsControlHide"
-        v-show="tobsHideIsShow"
-      ></tabs>
+    <tabs
+      class="tab-item tabs-hide"
+      :titles="tabsTitles"
+      @tabClick="tabClick"
+      ref="topsControlHide"
+      v-show="tobsHideIsShow"
+    ></tabs>
     <scroll-component
       class="content"
       ref="scroll"
@@ -73,7 +73,8 @@ export default {
       goodsType: "pop",
       isShowBackTop: false,
       topsOffsetTop: 300,
-      tobsHideIsShow:false,
+      tobsHideIsShow: false,
+      saveY: 0,
     };
   },
   created() {
@@ -89,11 +90,23 @@ export default {
     this.$bus.$on(
       "imgLoad",
       debounce(() => {
-        console.log("-----");
+        // console.log("-----");
         this.$refs.scroll.refresh();
       }),
       200
     );
+  },
+  //保存位置
+  activated() {
+    // console.log('activated');
+    // console.log(this.saveY);
+    this.$refs.scroll.scrollTo(0, this.saveY, 0);
+    this.$refs.scroll.refresh();
+  },
+  deactivated() {
+    // console.log("deactivated");
+    this.saveY = this.$refs.scroll.getScrollY();
+    // console.log(this.saveY);
   },
   methods: {
     /* 事件 */
@@ -122,8 +135,8 @@ export default {
     },
     //显示返回顶部按钮
     contentScroll(position) {
-      this.isShowBackTop = (-position.y) > 1000;
-      this.tobsHideIsShow = (-position.y) > this.topsOffsetTop;
+      this.isShowBackTop = -position.y > 1000;
+      this.tobsHideIsShow = -position.y > this.topsOffsetTop;
     },
     //上拉事件
     scrollPullingUp() {
@@ -189,7 +202,7 @@ export default {
 .tab-item {
   margin-bottom: 10px;
 }
-.tabs-hide{
+.tabs-hide {
   position: relative;
   z-index: 9;
   background-color: #fff;

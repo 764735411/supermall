@@ -28,6 +28,7 @@ export default {
       probeType: 3,
       pullUpLoad: true,
     });
+    // console.log( this.betterScroll);
     //监听滚动
     this.betterScroll.on("scroll", (position) => {
       this.$emit("backTopScroll", position);
@@ -46,6 +47,9 @@ export default {
     },
     refresh() {
       this.betterScroll && this.betterScroll.refresh();
+    },
+    getScrollY(){
+       return this.betterScroll ? this.betterScroll.y:0; 
     },
   },
 };

@@ -1,12 +1,13 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
-const Home = () => import('views/home/Home.vue')
-const Classify = () => import('views/classify/Classify.vue')
-const Cat = () => import('views/cat/ShopCat.vue')
-const Profile = () => import('../views/profile/Profile.vue')
+const Home = () => import('views/home/Home.vue');
+const Classify = () => import('views/classify/Classify.vue');
+const Cat = () => import('views/cat/ShopCat.vue');
+const Profile = () => import('../views/profile/Profile.vue');
+const Detail = () => import('../views/detail/Detail.vue');
 
 const routes = [
   {
@@ -29,12 +30,16 @@ const routes = [
     path: '/cat',
     component: Cat
   },
-]
+  {
+    path: '/detail/:iid',
+    component: Detail
+  },
+];
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
-})
+});
 
-export default router
+export default router;

@@ -1,5 +1,5 @@
 <template>
-  <div class="goods-list-item">
+  <div class="goods-list-item" @click="itemClick">
     <img :src="goodsItem.show.img"  @load="imgLoad"/>
     <div class="item-info">
       <p>{{ goodsItem.title }}</p>
@@ -24,6 +24,9 @@ export default {
     imgLoad(){
       // console.log('imgLoad');
       this.$bus.$emit('imgLoad');
+    },
+    itemClick(){
+      this.$router.push('/detail/'+this.goodsItem.iid);
     }
   },
 };
@@ -32,9 +35,12 @@ export default {
 <style scoped lang="less">
 .goods-list-item {
   position: relative;
+  // width: 190px;
   width: 46%;
+  // height: 320px;
+  // height: 100vh;
   height: 320px;
-  margin-top: 10px;
+  margin-bottom: 10px;
 }
 .goods-list-item img {
   // padding-bottom: 40px;

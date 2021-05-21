@@ -106,7 +106,7 @@ export default {
 
       //2.保存个数
       this.slideCount = slideEls.length;
-      console.log("length",slideEls.length);
+      // console.log("length",slideEls.length);
 
       //3.如果大于1个，那么在前后分别添加一个slide
       if (this.slideCount > 1) {
