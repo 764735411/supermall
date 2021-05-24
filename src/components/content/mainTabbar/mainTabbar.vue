@@ -1,8 +1,5 @@
 <template>
   <div>
-    <keep-alive>
-      <router-view></router-view>
-    </keep-alive>
     <!-- 使用组件 -->
     <tabbar>
       <tabbar-item link="/home">
@@ -24,7 +21,11 @@
         <div slot="item-text">分类</div>
       </tabbar-item>
       <tabbar-item link="/cat">
-        <img slot="item-icon" src="~assets/imges/tabbar/cart-Empty.svg" alt="" />
+        <img
+          slot="item-icon"
+          src="~assets/imges/tabbar/cart-Empty.svg"
+          alt=""
+        />
         <img
           slot="item-icon-active"
           src="~assets/imges/tabbar/cart-Empty-active.svg"

@@ -39,7 +39,7 @@ export default {
       this.currtIndex = index;
     },
     goBack(){
-      this.$router.back();
+      this.$router.go(-1);
     }
   },
 };

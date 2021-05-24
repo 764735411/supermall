@@ -8,3 +8,14 @@ export function getDetailData(iid) {
     }
   });
 }
+
+export class GoodsInfo{
+  constructor(columns,itemInfo,shopInfo){
+    this.title = itemInfo.title,
+    this.columns= columns,
+    this.oldPrice= itemInfo.oldPrice,
+    this.price = itemInfo.price,
+    this.serveices = shopInfo.services,
+    this.discount = itemInfo.discountDesc
+  }
+}
