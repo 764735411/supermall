@@ -46,7 +46,7 @@ import GoodsList from "components/content/goods/GoodsList";
 import BackTop from "components/content/backTop/BackTop";
 
 import { getHomeMultidata, getGoodsList } from "network/home.js";
-import { debounce } from "common/eventService/eventService.js";
+import { debounce } from "common/utils/utils.js";
 
 export default {
   name: "Home",
