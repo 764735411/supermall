@@ -2,18 +2,20 @@
   <div class="detail">
     <!-- 导航栏 -->
     <detail-nav-bar class="detail-nav-bar"></detail-nav-bar>
-    <scroll-component class="content">
+    <scroll-component class="content" ref="scroll">
     <detail-swiper :topImages="topImages"></detail-swiper>
     <detail-goods class="detail-goods" :goodsInfo="goods"></detail-goods>
     <detail-shop class="detail-shop" :shopInfo="shop"></detail-shop>
     <detail-image-info :image-info="detailImage"></detail-image-info>
     <detail-param :param-info="detailParam"></detail-param>
+    <detail-rate :rate-list="rate" ></detail-rate>
+    <goods-list :goodsList="recommnendImages"></goods-list>
     </scroll-component>
   </div>
 </template>
 
 <script>
-import { getDetailData, GoodsInfo } from "network/detail.js";
+import { getDetailData, GoodsInfo,getRecommend } from "network/detail.js";
 
 
 import ScrollComponent from 'components/common/scroll/ScrollComponent.vue'
@@ -23,6 +25,10 @@ import DetailGoods from "./child-components/DetailGoods.vue";
 import DetailShop from "./child-components/DetailShop.vue";
 import DetailImageInfo from "./child-components/DetailImageInfo.vue";
 import DetailParam from "./child-components/DetailParam.vue";
+import DetailRate from "./child-components/DetailRate.vue";
+
+import GoodsList from 'components/content/goods/GoodsList.vue';
+import {imgItemListenter} from 'common/mixin/mixin.js';
 
 export default {
   name: "Detail",
@@ -34,6 +40,8 @@ export default {
     DetailShop,
     DetailImageInfo,
     DetailParam,
+    DetailRate,
+    GoodsList,
   },
   data() {
     return {
@@ -43,19 +51,24 @@ export default {
       shop:{},
       detailImage:[],
       detailParam:{},
+      rate:{},
+      recommnendImages:[],
     };
   },
+  mixins:[imgItemListenter],
   created() {
     // 1.获取到goodsItem的iid
     this.iid = this.$route.params.iid;
     // 2.请求数据
     this.detailGetData(this.iid);
+    // 3.请求推荐数据
+    this.detailGetRecommend();
   },
   methods: {
     detailGetData(iid) {
       getDetailData(iid)
         .then((res) => {
-          console.log(res);
+          // console.log(res);
           let data = res.result;
           this.topImages = data.itemInfo.topImages;
           this.goods = new GoodsInfo(
@@ -69,10 +82,23 @@ export default {
           this.detailImage = data.detailInfo.detailImage;
           //商品参数
           this.detailParam = data.itemParams;
+          //评论
+          this.rate= data.rate;
+          // console.log("rate",this.rate);
         })
         .catch((res) => {
           console.log(res);
         });
+    },
+    detailGetRecommend(){
+      getRecommend()
+      .then((res)=>{
+        // console.log(res);
+        this.recommnendImages = res.data.list;
+      })
+      .catch((err)=>{
+        console.log(err);
+      })
     },
   },
 };

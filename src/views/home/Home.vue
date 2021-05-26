@@ -46,7 +46,7 @@ import GoodsList from "components/content/goods/GoodsList";
 import BackTop from "components/content/backTop/BackTop";
 
 import { getHomeMultidata, getGoodsList } from "network/home.js";
-import { debounce } from "common/utils/utils.js";
+import {imgItemListenter} from 'common/mixin/mixin.js';
 
 export default {
   name: "Home",
@@ -77,6 +77,7 @@ export default {
       saveY: 0,
     };
   },
+  mixins:[imgItemListenter],
   created() {
     //获取展示数据
     this.homeGetMultidata();
@@ -86,27 +87,17 @@ export default {
     this.homeGetGoodsList("sell");
   },
   mounted() {
-    // 事件总线的使用
-    this.$bus.$on(
-      "imgLoad",
-      debounce(() => {
-        // console.log("-----");
-        this.$refs.scroll.refresh();
-      }),
-      200
-    );
+ 
   },
   //保存位置
   activated() {
-    // console.log('activated');
-    // console.log(this.saveY);
     this.$refs.scroll.scrollTo(0, this.saveY, 0);
     this.$refs.scroll.refresh();
   },
   deactivated() {
-    // console.log("deactivated");
+    // 记录Y轴位置
     this.saveY = this.$refs.scroll.getScrollY();
-    // console.log(this.saveY);
+   
   },
   methods: {
     /* 事件 */

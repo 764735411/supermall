@@ -47,6 +47,7 @@ export default {
     },
     refresh() {
       this.betterScroll && this.betterScroll.refresh();
+      console.log('refresh');
     },
     getScrollY(){
        return this.betterScroll ? this.betterScroll.y:0; 

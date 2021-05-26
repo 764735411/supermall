@@ -9,6 +9,12 @@ export function getDetailData(iid) {
   });
 }
 
+export function getRecommend(){
+  return requst({
+    url:'/recommend',
+  });
+}
+
 export class GoodsInfo{
   constructor(columns,itemInfo,shopInfo){
     this.title = itemInfo.title,
