@@ -11,6 +11,18 @@ export function debounce(func, delay) {
   }
 }
 
+//节流函数
+export function throttle(fn, delay) { 
+  let prev = Date.now();
+  return function() {
+    let now = Date.now();
+    if (now - prev > delay) {
+      fn();
+      prev = Date.now();
+    }         
+  };       
+}    
+
 //日期格式化
 export function formartDate(date,fmt) {
   if (/(y+)/.test(fmt)) {

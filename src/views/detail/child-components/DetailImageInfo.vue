@@ -1,12 +1,9 @@
 <template>
   <div class="image-info" v-if="Object.keys(imageInfo).length !== 0">
-    <div>
-
-    </div>
     <div class="show" v-for="(item, index) in imageInfo" :key="index">
       <h2 class="title">{{item.key}}</h2>
       <div class="image-list" v-for="(image, index) in item.list" :key="index">
-        <img :src="image" alt="">
+        <img :src="image" alt="" @load="imgLoad">
       </div>
     </div>
   </div>
@@ -22,7 +19,12 @@ export default {
         return [];
       }
     }
-  }
+  },
+  methods: {
+    imgLoad(){
+      this.$emit("detailImgLoad");
+    }
+  },
 }
 </script>
 

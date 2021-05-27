@@ -8,8 +8,9 @@ export const imgItemListenter = {
     }
   },
   mounted() {
+    const allScroll = this.$refs.scroll;
     let newRefresh = debounce(() => {
-      this.$refs.scroll.refresh();
+      allScroll.refresh();
     }, 200);
     //保存监听事件
     this.imgListenter = () => { newRefresh() };
