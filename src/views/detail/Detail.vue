@@ -6,6 +6,7 @@
       @navBarClick="navBarClick"
       ref="navbar"
     ></detail-nav-bar>
+    <!-- 滚动栏 -->
     <scroll-component
       class="content"
       ref="scroll"
@@ -22,6 +23,8 @@
       <detail-rate ref="comment" :rate-list="rate"></detail-rate>
       <goods-list ref="recommend" :goodsList="recommnendImages"></goods-list>
     </scroll-component>
+    <!-- 底部 -->
+    <detail-bottom-bar class="detail-bottom-bar"></detail-bottom-bar>
   </div>
 </template>
 
@@ -36,6 +39,8 @@ import DetailShop from "./child-components/DetailShop.vue";
 import DetailImageInfo from "./child-components/DetailImageInfo.vue";
 import DetailParam from "./child-components/DetailParam.vue";
 import DetailRate from "./child-components/DetailRate.vue";
+
+import DetailBottomBar from './child-components/DetailBottomBar.vue';
 
 import GoodsList from "components/content/goods/GoodsList.vue";
 import { imgItemListenter } from "common/mixin/mixin.js";
@@ -53,6 +58,7 @@ export default {
     DetailParam,
     DetailRate,
     GoodsList,
+    DetailBottomBar,
   },
   data() {
     return {
@@ -117,9 +123,10 @@ export default {
     detailScroll(position) {
       let y = -position.y + 44;
       for (let i = 0; i < this.detailScrollToY.length - 1; i++) {
-        if (y > this.detailScrollToY[i] && y <= this.detailScrollToY[i + 1]) {
+        if (y >= this.detailScrollToY[i] && y < this.detailScrollToY[i + 1]) {
           if(this.currentIndex!== i){
             this.currentIndex = i;
+            // console.log( this.currentIndex);
           }
         }
       }
@@ -173,7 +180,7 @@ export default {
   z-index: 1;
 }
 .content {
-  height: calc(100% - 44px);
+  height: calc(100% - 44px - 49px);
 }
 .detail-goods {
   margin-top: 16px;
@@ -186,5 +193,15 @@ export default {
 }
 .detail-shop {
   padding: 10px;
+}
+.detail-bottom-bar{
+  width: 100%;
+  height: 49px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  z-index: 9;
 }
 </style>
