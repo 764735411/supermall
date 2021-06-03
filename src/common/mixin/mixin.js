@@ -23,12 +23,12 @@ export const imgItemListenter = {
   deactivated() {
     //取消监听全局事件
     this.$bus.$off("imgesLoad", this.imgListenter);
-    console.log('deactivated');
+    // console.log('deactivated');
   },
   destroyed() {
     //取消监听全局事件
     this.$bus.$off("imgesLoad", this.imgListenter);
-    console.log('destroyed');
+    // console.log('destroyed');
   },
 
 }

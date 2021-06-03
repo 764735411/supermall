@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="shop-car">
-      <div class="car"><span>加入购物车</span></div>
+      <div class="car" @click="addCar"><span>加入购物车</span></div>
       <div class="shop"><span>购买</span></div>
     </div>
   </div>
@@ -24,6 +24,12 @@
 <script>
 export default {
   name: "DetailBottomBar",
+  methods: {
+    addCar(){
+      // console.log('addCar');
+     this.$emit('addToCar');
+    }
+  },
 };
 </script>
 
@@ -61,7 +67,6 @@ export default {
   vertical-align: middle;
   margin-top: 3px;
   margin-bottom: 3px;
-  
 }
 
 .car,.shop {

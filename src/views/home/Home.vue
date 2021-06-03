@@ -46,7 +46,7 @@ import GoodsList from "components/content/goods/GoodsList";
 import BackTop from "components/content/backTop/BackTop";
 
 import { getHomeMultidata, getGoodsList } from "network/home.js";
-import {imgItemListenter} from 'common/mixin/mixin.js';
+import { imgItemListenter } from "common/mixin/mixin.js";
 
 export default {
   name: "Home",
@@ -77,7 +77,7 @@ export default {
       saveY: 0,
     };
   },
-  mixins:[imgItemListenter],
+  mixins: [imgItemListenter],
   created() {
     //获取展示数据
     this.homeGetMultidata();
@@ -86,18 +86,24 @@ export default {
     this.homeGetGoodsList("new");
     this.homeGetGoodsList("sell");
   },
-  mounted() {
- 
-  },
+  mounted() {},
   //保存位置
   activated() {
-    this.$refs.scroll.scrollTo(0, this.saveY, 0);
-    this.$refs.scroll.refresh();
+    console.log("activated");
+    console.log("saveY", this.saveY);
+    this.$nextTick(() => {
+      this.$refs.scroll.scrollTo(0, this.saveY, 0);
+      this.$refs.scroll.refresh();
+    }); 
   },
   deactivated() {
     // 记录Y轴位置
+    console.log("deactivated");
     this.saveY = this.$refs.scroll.getScrollY();
-   
+    console.log(this.saveY);
+    this.$nextTick(() => {
+      this.$refs.scroll.stopScrollEvent();
+    });
   },
   methods: {
     /* 事件 */
@@ -122,6 +128,7 @@ export default {
     },
     //backTop点击事件
     backTopClick() {
+      console.log('backTopClick');
       this.$refs.scroll.scrollTo(0, 0, 300);
     },
     //显示返回顶部按钮

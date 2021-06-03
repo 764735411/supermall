@@ -12,6 +12,7 @@
       ref="scroll"
       @backTopScroll="detailScroll"
     >
+      <!-- <div>{{ $store.state.carList }}</div> -->
       <detail-swiper :topImages="topImages"></detail-swiper>
       <detail-goods class="detail-goods" :goodsInfo="goods"></detail-goods>
       <detail-shop class="detail-shop" :shopInfo="shop"></detail-shop>
@@ -24,7 +25,10 @@
       <goods-list ref="recommend" :goodsList="recommnendImages"></goods-list>
     </scroll-component>
     <!-- 底部 -->
-    <detail-bottom-bar class="detail-bottom-bar"></detail-bottom-bar>
+    <detail-bottom-bar
+      class="detail-bottom-bar"
+      @addToCar="addCar"
+    ></detail-bottom-bar>
   </div>
 </template>
 
@@ -40,7 +44,7 @@ import DetailImageInfo from "./child-components/DetailImageInfo.vue";
 import DetailParam from "./child-components/DetailParam.vue";
 import DetailRate from "./child-components/DetailRate.vue";
 
-import DetailBottomBar from './child-components/DetailBottomBar.vue';
+import DetailBottomBar from "./child-components/DetailBottomBar.vue";
 
 import GoodsList from "components/content/goods/GoodsList.vue";
 import { imgItemListenter } from "common/mixin/mixin.js";
@@ -92,7 +96,7 @@ export default {
       this.detailScrollToY.push(this.$refs.comment.$el.offsetTop);
       this.detailScrollToY.push(this.$refs.recommend.$el.offsetTop);
       this.detailScrollToY.push(Number.MAX_VALUE);
-      console.log(this.detailScrollToY);
+      // console.log(this.detailScrollToY);
     }, 200);
     //5. 刷新
     this.detailRefresh = debounce(() => {
@@ -124,7 +128,7 @@ export default {
       let y = -position.y + 44;
       for (let i = 0; i < this.detailScrollToY.length - 1; i++) {
         if (y >= this.detailScrollToY[i] && y < this.detailScrollToY[i + 1]) {
-          if(this.currentIndex!== i){
+          if (this.currentIndex !== i) {
             this.currentIndex = i;
             // console.log( this.currentIndex);
           }
@@ -136,7 +140,7 @@ export default {
     detailGetData(iid) {
       getDetailData(iid)
         .then((res) => {
-          // console.log(res);
+          console.log(res);
           let data = res.result;
           this.topImages = data.itemInfo.topImages;
           this.goods = new GoodsInfo(
@@ -152,7 +156,6 @@ export default {
           this.detailParam = data.itemParams;
           //评论
           this.rate = data.rate;
-          // console.log("rate",this.rate);
         })
         .catch((res) => {
           console.log(res);
@@ -167,6 +170,17 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    },
+    /* 加入购物车 */
+    addCar() {
+      // console.log('addCar');
+      const project = {};
+      project.iid = this.iid;
+      project.image = this.detailImage[0].list[0];
+      project.title = this.goods.title;
+      project.desc = this.goods.desc;
+      project.price = this.goods.lowPrice;
+      this.$store.dispatch("addCart", project);
     },
   },
 };
@@ -194,14 +208,14 @@ export default {
 .detail-shop {
   padding: 10px;
 }
-.detail-bottom-bar{
+.detail-bottom-bar {
+  position: fixed;
   width: 100%;
   height: 49px;
-  position: fixed;
-  bottom: 0;
   left: 0;
-  right: 0;
-  background-color: #fff;
+  bottom: 0;
+  // right: 0;
   z-index: 9;
+  background-color: #fff;
 }
 </style>

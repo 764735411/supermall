@@ -27,12 +27,15 @@ export default {
       click: true,
       probeType: 3,
       pullUpLoad: true,
+      //解决刷新才能下滑
+      mouseWheel: true,
+      disableTouch: false,
     });
     // console.log( this.betterScroll);
-    //监听滚动
-    this.betterScroll.on("scroll", (position) => {
-      this.$emit("backTopScroll", position);
-    });
+     //监听滚动
+      this.betterScroll.on("scroll", (position) => {
+        this.$emit("backTopScroll", position);
+      });
     //监听上拉到底
     this.betterScroll.on("pullingUp", () => {
       this.$emit("scrollPullingUp");
@@ -40,6 +43,7 @@ export default {
   },
   methods: {
     scrollTo(x, y, delay) {
+      console.log('y',y);
       this.betterScroll && this.betterScroll.scrollTo(x, y, delay);
     },
     finishPullUp() {
@@ -49,15 +53,19 @@ export default {
       this.betterScroll && this.betterScroll.refresh();
       // console.log('refresh');
     },
-    getScrollY(){
-       return this.betterScroll ? this.betterScroll.y:0; 
+    getScrollY() {
+      return this.betterScroll ? this.betterScroll.y : 0;
+    },
+    stopScrollEvent() {
+      console.log("停止滚动事件");
+      this.betterScroll.stop();
     },
   },
 };
 </script>
 
 <style lang="less" scoped>
-.wrapper{
+.wrapper {
   width: 100%;
 }
 </style>
